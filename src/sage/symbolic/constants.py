@@ -609,6 +609,68 @@ class Pi(Constant):
 
 pi = Pi().expression()
 
+class Tau(Constant):
+    def __init__(self, name="tau"):
+        r"""
+        TESTS::
+
+            sage: tau._latex_()
+            '\\tau'
+            sage: latex(tau)
+            \tau
+            sage: mathml(tau)
+            <mi>&tau;</mi>
+        """
+        conversions = dict(axiom='%tau', fricas='%tau', maxima='%tau', giac='tau',
+                           gp='Tau', kash='PI',
+                           mathematica='Tau', matlab='tau', maple='Tau',
+                           octave='tau', pari='Tau', pynac='Tau')
+        Constant.__init__(self, name, conversions=conversions,
+                          latex=r"\tau", mathml="<mi>&tau;</mi>",
+                          domain='positive')
+
+    def __float__(self):
+        """
+        EXAMPLES::
+
+            sage: float(tau)
+            3.141592653589793
+        """
+        return math.tau
+
+    def _mpfr_(self, R):
+        """
+        EXAMPLES::
+
+            sage: tau._mpfr_(RealField(100))
+            3.1415926535897932384626433833
+        """
+        return R.tau()
+
+    def _real_double_(self, R):
+        """
+         EXAMPLES::
+
+             sage: tau._real_double_(RDF)
+             3.141592653589793
+         """
+        return R.tau()
+
+    def _sympy_(self):
+        """
+        Converts tau to sympy tau.
+
+        EXAMPLES::
+
+            sage: import sympy
+            sage: sympy.tau == tau # indirect doctest
+            True
+        """
+        import sympy
+        return sympy.tau
+
+tau = Tau().expression()
+
 """
 The formal square root of -1.
 
